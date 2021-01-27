@@ -3,14 +3,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "parser": "@typescript-eslint/parser",
   "rules": {
-    "@typescript-eslint/strict-boolean-expressions": "off",
-    "@typescript-eslint/no-misused-promises": [
-      "error",
-      {
-        "checksVoidReturn": false
-      }
-    ]
+    "@typescript-eslint/strict-boolean-expressions": "off"
   }
 }
