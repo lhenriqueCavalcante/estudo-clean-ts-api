@@ -3,6 +3,7 @@ import { LoadSurveysRepository } from '../../protocols/db/survey/load-surveys-re
 import { DbLoadSurveys } from './db-load-surveys'
 
 const makeFakeSurveys = (): SurveyModel[] => {
+  const date = new Date()
   return [{
     id: 'any_id',
     question: 'any_question',
@@ -10,7 +11,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
       image: 'any_image',
       answer: 'any_answer'
     }],
-    date: new Date()
+    date
   },
   {
     id: 'other_id',
@@ -19,7 +20,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
       image: 'other_image',
       answer: 'other_answer'
     }],
-    date: new Date()
+    date
   }]
 }
 
@@ -55,5 +56,12 @@ describe('DbLoadSurveys', () => {
     const { sut } = makeSut()
     const surveys = await sut.load()
     expect(surveys).toEqual(makeFakeSurveys())
+  })
+
+  test('Should throw if LoadSurveysRepository throws', async () => {
+    const { loadSurveysRepositoryStub, sut } = makeSut()
+    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const surveys = sut.load()
+    await expect(surveys).rejects.toThrow()
   })
 })
