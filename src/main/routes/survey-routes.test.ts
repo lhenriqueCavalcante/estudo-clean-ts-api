@@ -17,7 +17,7 @@ describe('Survey Routes', () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = await MongoHelper.getCollection('accounts')
+    surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
     accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
@@ -76,6 +76,27 @@ describe('Survey Routes', () => {
       await request(app)
         .get('/api/surveys')
         .expect(403)
+    })
+
+    test('should return 204 on load surveys with valid accessToken if there are no surveys', async () => {
+      const res = await accountCollection.insertOne({
+        name: 'Henrique',
+        email: 'henrique@mail.com',
+        password: '123'
+      })
+      const id = res.ops[0]._id
+      const accessToken = sign({ id }, env.jwtSecret)
+      await accountCollection.updateOne({
+        _id: id
+      }, {
+        $set: {
+          accessToken
+        }
+      })
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+        .expect(204)
     })
   })
 })
