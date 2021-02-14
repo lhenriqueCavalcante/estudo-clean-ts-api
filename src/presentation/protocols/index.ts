@@ -1,5 +1,5 @@
 export * from './controller'
 export * from './http'
 export * from './validation'
-export * from '../../validation/protocols/email-validator'
-export * from '../protocols/middleware'
+export * from '@/validation/protocols/email-validator'
+export * from '@/presentation/protocols/middleware'
