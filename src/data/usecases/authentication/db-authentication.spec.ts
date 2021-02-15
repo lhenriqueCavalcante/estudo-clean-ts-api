@@ -56,7 +56,7 @@ describe('DbAuthentication UseCase', () => {
     }
     return new LoadAccountByEmailRepositoryStub()
   }
-  interface SutTypes {
+  type SutTypes = {
     loadAccountByEmailRepository: LoadAccountByEmailRepository
     sut: DbAuthentication
     hashComparerStub: HashComparer
