@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
-    "debug": "node --inspect --nolazy dist/main/server.js",
+    "debug": "nodemon -L --watch ./dist --inspect --nolazy dist/main/server.js",
     "dev": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace  --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
