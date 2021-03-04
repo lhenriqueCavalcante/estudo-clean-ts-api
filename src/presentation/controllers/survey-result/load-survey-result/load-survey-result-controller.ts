@@ -1,3 +1,5 @@
+import { InvalidParamError } from '@/presentation/errors'
+import { forbidden } from '@/presentation/helpers/http/http-helper'
 import { Controller, HttpRequest, HttpResponse, LoadSurveyById } from './load-survey-result-controller-protocols'
 
 export class LoadSurveyResultController implements Controller {
@@ -6,7 +8,10 @@ export class LoadSurveyResultController implements Controller {
   ) {}
 
   async handle (httRequest: HttpRequest): Promise<HttpResponse> {
-    await this.loadSurveyById.loadById(httRequest.params.surveyId)
+    const survey = await this.loadSurveyById.loadById(httRequest.params.surveyId)
+    if (!survey) {
+      return forbidden(new InvalidParamError('surveyId'))
+    }
     return null
   }
 }
