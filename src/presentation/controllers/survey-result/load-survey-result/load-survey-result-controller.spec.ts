@@ -4,8 +4,16 @@ import { mockLoadSurveyById, mockLoadSurveyResult } from '@/presentation/test'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
 import { mockSurveyResultModel, throwError } from '@/domain/test'
+import MockDate from 'mockdate'
 
 describe('LoadSurveyResult Controller', () => {
+  beforeAll(() => {
+    MockDate.set(new Date())
+  })
+
+  afterAll(() => {
+    MockDate.reset()
+  })
   type SutTypes = {
     sut: LoadSurveyResultController
     loadSurveyByIdStub: LoadSurveyById
