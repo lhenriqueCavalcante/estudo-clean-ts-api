@@ -4,6 +4,7 @@ import { badRequest, serverError, unauthorized, ok } from '@/presentation/helper
 import { MissingParamError } from '@/presentation/errors'
 import { mockAuthentication, mockValidation } from '@/presentation/test'
 import { throwError } from '@/domain/test'
+import { mockAuthenticationModel } from '@/data/test'
 
 const mockRequest = (): HttpRequest => ({
   body: {
@@ -58,7 +59,7 @@ describe('Login Controller', () => {
     const { sut } = makeSut()
 
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(ok(mockAuthenticationModel()))
   })
 
   test('Should call Validation with correct values', async () => {

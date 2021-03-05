@@ -5,6 +5,7 @@ import { MissingParamError, ServerError, EmailUseError } from '@/presentation/er
 import { mockAuthentication, mockValidation, mockAddAccount } from '@/presentation/test'
 import { HttpRequest } from '@/presentation/protocols'
 import { throwError } from '@/domain/test'
+import { mockAuthenticationModel } from '@/data/test'
 
 const mockRequest = (): HttpRequest => ({
   body: {
@@ -55,7 +56,7 @@ describe('SignUp Controller', () => {
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(ok(mockAuthenticationModel()))
   })
 
   test('Should return 403 if AddAccount returns null', async () => {

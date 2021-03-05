@@ -1,4 +1,4 @@
-import { mockEncrypter, mockHashComparer, mockLoadAccountByEmailRepository, mockUpdateAccessTokenRepository } from '@/data/test'
+import { mockAuthenticationModel, mockEncrypter, mockHashComparer, mockLoadAccountByEmailRepository, mockUpdateAccessTokenRepository } from '@/data/test'
 import { mockAuthentication, throwError } from '@/domain/test'
 import { DbAuthentication } from './db-authentication'
 import {
@@ -92,10 +92,10 @@ describe('DbAuthentication UseCase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('Sould call Encrypter with correct id', async () => {
+  test('Sould return a AuthenticationModel on success', async () => {
     const { sut } = makeSut()
     const accessToken = await sut.auth(mockAuthentication())
-    expect(accessToken).toBe('any_token')
+    expect(accessToken).toEqual(mockAuthenticationModel())
   })
 
   test('Sould call UpdateAcessTokenRepositiry with correct values', async () => {
